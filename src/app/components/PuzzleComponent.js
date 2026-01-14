@@ -22,14 +22,25 @@ export default function PuzzleComponent({ puzzle, onSolve }) {
   }
 
   // Normalize questions to an array even if legacy single question format is used
-  const questions = puzzle.questions || [
-    {
-      question: puzzle.question,
-      options: puzzle.options,
-      correctAnswer: puzzle.correctAnswer,
-      hint: puzzle.hint
-    }
-  ];
+  // And randomly select 3 questions for this session
+  const [questions] = useState(() => {
+    const allQuestions = puzzle.questions || [
+      {
+        question: puzzle.question,
+        options: puzzle.options,
+        correctAnswer: puzzle.correctAnswer,
+        hint: puzzle.hint
+      }
+    ];
+    // Shuffle and pick 3, then shuffle their options
+    return [...allQuestions]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 3)
+      .map(q => ({
+        ...q,
+        options: [...q.options].sort(() => Math.random() - 0.5)
+      }));
+  });
 
   const currentQuestion = questions[currentQuestionIndex];
 

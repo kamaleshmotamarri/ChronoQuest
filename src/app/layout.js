@@ -24,6 +24,9 @@ const cinzel = Cinzel({
 export const metadata = {
   title: "ChronoQuest: Fractures in Time",
   description: "A time-travel puzzle adventure game. Repair the timeline and save reality!",
+  icons: {
+    icon: '/favicon.png',
+  },
 };
 
 export default function RootLayout({ children }) {
