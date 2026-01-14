@@ -71,24 +71,31 @@ export default function IntroScreen({ onStart }) {
               <p className="font-light">
                 Your mission: <strong className="text-white font-semibold">Repair Reality.</strong>
               </p>
+              <p className="text-sm text-slate-400 mt-4 italic border-t border-white/10 pt-4">
+                * Agency Protocol: Secure authentication required to access the timeline. Progress will be synced to your neural profile.
+              </p>
             </div>
           </motion.div>
 
-          <motion.button
-            whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(6,182,212,0.4)" }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            onClick={onStart}
-            className="group relative px-10 py-5 bg-white text-black rounded-full font-bold text-lg tracking-wide overflow-hidden"
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              ACCEPT MISSION <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-            <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-cyan-500 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-          </motion.button>
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(6,182,212,0.4)" }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              onClick={onStart}
+              className="group relative px-10 py-5 bg-white text-black rounded-full font-bold text-lg tracking-wide overflow-hidden"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                ACCEPT MISSION <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+              <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-cyan-500 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            </motion.button>
+
+            <HowToPlayBtn />
+          </div>
 
           <motion.p
             initial={{ opacity: 0 }}
@@ -101,5 +108,80 @@ export default function IntroScreen({ onStart }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function HowToPlayBtn() {
+  const [isOpen, setIsOpen] = (require('react').useState)(false);
+
+  return (
+    <>
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.9 }}
+        onClick={() => setIsOpen(true)}
+        className="px-10 py-5 bg-slate-900 border border-white/10 text-white rounded-full font-bold text-lg tracking-wide hover:bg-slate-800 transition-colors"
+      >
+        HOW TO PLAY
+      </motion.button>
+
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="relative max-w-2xl w-full bg-slate-900 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl overflow-hidden"
+          >
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-purple-600" />
+
+            <h3 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+              <Shield className="text-cyan-400 w-8 h-8" /> Field Guide: Temporal Preservation
+            </h3>
+
+            <div className="space-y-6 text-slate-300">
+              <div className="flex gap-4">
+                <div className="w-10 h-10 rounded-full bg-cyan-400/10 flex-shrink-0 flex items-center justify-center text-cyan-400 font-bold border border-cyan-400/20">1</div>
+                <div>
+                  <h4 className="text-white font-bold mb-1 font-orbitron tracking-wider">CHOOSE YOUR AGENT</h4>
+                  <p className="text-sm">Each specialist has unique stats and expertise. Select the one that matches your playstyle.</p>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <div className="w-10 h-10 rounded-full bg-purple-400/10 flex-shrink-0 flex items-center justify-center text-purple-400 font-bold border border-purple-400/20">2</div>
+                <div>
+                  <h4 className="text-white font-bold mb-1 font-orbitron tracking-wider">NAVIGATE THE TIMELINE</h4>
+                  <p className="text-sm">Travel through Ancient Egypt, the Medieval Era, the Renaissance, and the Space Age to find fractures.</p>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <div className="w-10 h-10 rounded-full bg-emerald-400/10 flex-shrink-0 flex items-center justify-center text-emerald-400 font-bold border border-emerald-400/20">3</div>
+                <div>
+                  <h4 className="text-white font-bold mb-1 font-orbitron tracking-wider">SOLVE & RESTORE</h4>
+                  <p className="text-sm">Explore interactive environments (WASD/Arrows), interact with NPCs (Space), and solve puzzles to repair historical anomalies.</p>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-white/10">
+                <p className="text-xs text-slate-500 uppercase tracking-widest italic">
+                  * Warning: Temporal fractures are unstable. Failure to complete a mission will require a full era reboot.
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setIsOpen(false)}
+              className="mt-8 w-full py-4 bg-white text-black font-bold rounded-2xl hover:bg-slate-200 transition-colors"
+            >
+              UNDERSTOOD
+            </button>
+          </motion.div>
+        </div>
+      )}
+    </>
   );
 }

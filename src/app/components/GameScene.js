@@ -75,13 +75,13 @@ export default function GameScene({ era, character, onInteract, onPuzzleStart, o
 
           // --- Create Player ---
           if (this.textures.exists('player-avatar')) {
-            this.player = this.add.image(100, height - 150, 'player-avatar');
+            this.player = this.add.image(width / 2, height / 2, 'player-avatar');
             // Scale player
             const pScale = 64 / Math.max(this.player.width, this.player.height);
             this.player.setScale(pScale);
           } else {
             // Fallback player
-            this.player = this.add.rectangle(100, height - 150, 48, 48, 0x4a9eff);
+            this.player = this.add.rectangle(width / 2, height / 2, 48, 48, 0x4a9eff);
             this.player.setStrokeStyle(2, 0xffffff);
           }
 

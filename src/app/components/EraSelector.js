@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Lock, CheckCircle, ArrowRight, Hourglass } from 'lucide-react';
 
-export default function EraSelector({ eras, completedEras, onSelectEra }) {
+export default function EraSelector({ eras, completedEras, onSelectEra, user, onLogout, onBack }) {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -24,7 +24,7 @@ export default function EraSelector({ eras, completedEras, onSelectEra }) {
   };
 
   return (
-    <div className="min-h-screen bg-black relative font-sans selection:bg-purple-500 selection:text-white flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen bg-black relative font-sans selection:bg-purple-500 selection:text-white flex flex-col items-center justify-center p-6 pb-20">
       {/* Background Effects */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-10 left-10 w-64 h-64 bg-purple-600/20 rounded-full blur-[100px]" />
@@ -32,13 +32,44 @@ export default function EraSelector({ eras, completedEras, onSelectEra }) {
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff22_1px,transparent_1px)] [background-size:24px_24px] opacity-10" />
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl">
+      {/* Top Navigation Bar */}
+      <div className="absolute top-0 left-0 right-0 z-30 p-6 flex justify-between items-start gap-4 pointer-events-none">
+        <button
+          onClick={onBack}
+          className="pointer-events-auto flex items-center gap-2 px-4 py-2 bg-slate-900/80 backdrop-blur-md rounded-full border border-white/10 text-white hover:bg-slate-800 transition-all group"
+        >
+          <motion.div whileHover={{ x: -2 }}>
+            <ArrowRight className="w-4 h-4 rotate-180" />
+          </motion.div>
+          <span className="text-xs font-bold uppercase tracking-widest">Back</span>
+        </button>
+
+        {onLogout && user && (
+          <div className="pointer-events-auto flex flex-col items-end gap-2 px-4 py-2 bg-slate-900/80 backdrop-blur-md rounded-2xl border border-white/10 shadow-xl max-w-[200px] md:max-w-none">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-[10px] md:text-xs text-slate-300 truncate">
+                Agent: <span className="text-white font-medium">{user.email}</span>
+              </span>
+            </div>
+            <button
+              onClick={onLogout}
+              className="text-[10px] md:text-xs font-bold text-red-400 hover:text-red-300 transition-colors uppercase tracking-widest border-t border-white/5 pt-2 w-full text-right"
+            >
+              Log Out
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div className="relative z-10 w-full max-w-6xl mt-16 md:mt-0">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
+
           <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-4 rounded-full bg-slate-800/50 border border-slate-700/50">
             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
             <span className="text-xs font-mono text-slate-400">TIMELINE STATUS: CRITICAL</span>

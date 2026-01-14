@@ -46,7 +46,7 @@ const characters = [
   },
 ];
 
-export default function CharacterSelection({ onSelect }) {
+export default function CharacterSelection({ onSelect, user, onLogout, onBack }) {
   const [selectedCharacter, setSelectedCharacter] = useState(null);
 
   const containerVariants = {
@@ -78,11 +78,41 @@ export default function CharacterSelection({ onSelect }) {
       <div className="absolute inset-0 z-0">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-900/40 rounded-full blur-[120px] animate-pulse" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-900/30 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
-        {/* Simple grid pattern via radial gradient to avoid external assets */}
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff33_1px,transparent_1px)] [background-size:20px_20px] opacity-10" />
       </div>
 
-      <div className="relative z-10 max-w-6xl w-full mx-auto px-4 py-8">
+      {/* Top Navigation Bar */}
+      <div className="absolute top-0 left-0 right-0 z-30 p-6 flex justify-between items-start gap-4 pointer-events-none">
+        <button
+          onClick={onBack}
+          className="pointer-events-auto flex items-center gap-2 px-4 py-2 bg-slate-900/80 backdrop-blur-md rounded-full border border-white/10 text-white hover:bg-slate-800 transition-all group"
+        >
+          <motion.div whileHover={{ x: -2 }}>
+            <ArrowRight className="w-4 h-4 rotate-180" />
+          </motion.div>
+          <span className="text-xs font-bold uppercase tracking-widest">Back</span>
+        </button>
+
+        {onLogout && (
+          <div className="pointer-events-auto flex flex-col items-end gap-2 px-4 py-2 bg-slate-900/80 backdrop-blur-md rounded-2xl border border-white/10 shadow-xl max-w-[200px] md:max-w-none">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-[10px] md:text-xs text-slate-300 truncate">
+                Logged in: <span className="text-white font-medium">{user?.email}</span>
+              </span>
+            </div>
+            <button
+              onClick={onLogout}
+              className="text-[10px] md:text-xs font-bold text-red-400 hover:text-red-300 transition-colors uppercase tracking-widest border-t border-white/5 pt-2 w-full text-right"
+            >
+              Abort Mission
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div className="relative z-10 max-w-6xl w-full mx-auto px-4 py-8 mt-12">
+
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}

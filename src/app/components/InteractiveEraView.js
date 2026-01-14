@@ -5,7 +5,7 @@ import GameScene from './GameScene';
 import DialogueModal from './DialogueModal';
 import PuzzleComponent from './PuzzleComponent';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Settings, Map, BookOpen, User, Maximize } from 'lucide-react';
+import { Settings, Map, BookOpen, User, Maximize, ArrowRight } from 'lucide-react';
 
 export default function InteractiveEraView({ era, character, onComplete, onReturn }) {
   const [showDialogue, setShowDialogue] = useState(false);
@@ -91,14 +91,15 @@ export default function InteractiveEraView({ era, character, onComplete, onRetur
           <div className="flex gap-4">
             <button
               onClick={onReturn}
-              className="bg-slate-900/60 backdrop-blur border border-white/10 text-slate-300 hover:text-white hover:border-white/30 p-2 md:p-3 rounded-lg transition-all group"
+              className="bg-slate-900/80 backdrop-blur-md border border-white/10 text-slate-300 hover:text-white hover:border-white/30 px-4 py-2 md:p-3 rounded-full flex items-center gap-2 transition-all group shadow-xl"
               title="Return to Hub"
             >
-              <Map className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <ArrowRight className="w-5 h-5 rotate-180 group-hover:-translate-x-1 transition-transform" />
+              <span className="text-xs font-bold uppercase tracking-widest hidden md:inline">Exit Era</span>
             </button>
           </div>
 
-          <div className="bg-slate-900/60 backdrop-blur-md border border-purple-500/30 px-4 md:px-8 py-2 md:py-3 rounded-b-xl shadow-[0_0_20px_rgba(168,85,247,0.2)] transform md:-translate-y-2">
+          <div className="bg-slate-900/80 backdrop-blur-md border border-purple-500/30 px-4 md:px-8 py-2 md:py-3 rounded-2xl shadow-[0_0_20px_rgba(168,85,247,0.2)] transform md:-translate-y-1">
             <h1 className="text-center font-orbitron font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 tracking-widest text-xs md:text-lg">
               {era.name.toUpperCase()}
             </h1>
@@ -109,13 +110,13 @@ export default function InteractiveEraView({ era, character, onComplete, onRetur
           </div>
 
           <div className="flex gap-2">
-            <div className="bg-slate-900/60 backdrop-blur px-2 md:px-4 py-2 rounded-lg border border-white/10 flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-md flex items-center justify-center text-lg">
+            <div className="bg-slate-900/80 backdrop-blur-md px-3 md:px-4 py-2 rounded-2xl border border-white/10 flex items-center gap-3 shadow-xl">
+              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center text-lg shadow-inner">
                 {character.sprite}
               </div>
-              <div className="hidden md:flex flex-col">
-                <span className="text-xs text-slate-400 font-mono uppercase">Operative</span>
-                <span className="text-sm font-bold text-white leading-none">{character.name}</span>
+              <div className="hidden md:flex flex-col text-right">
+                <span className="text-[10px] text-slate-400 font-mono uppercase tracking-tighter">Operative</span>
+                <span className="text-sm font-bold text-white leading-none truncate max-w-[100px]">{character.name}</span>
               </div>
             </div>
           </div>

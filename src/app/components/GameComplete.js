@@ -1,9 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Trophy, Clock, ShieldCheck, Zap, RotateCcw } from 'lucide-react';
+import { Trophy, Clock, ShieldCheck, Zap, RotateCcw, ArrowRight } from 'lucide-react';
 
-export default function GameComplete({ artifacts, onRestart }) {
+export default function GameComplete({ artifacts, onRestart, onBack }) {
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden font-sans">
       {/* Dynamic Background */}
@@ -96,13 +96,23 @@ export default function GameComplete({ artifacts, onRestart }) {
               </p>
             </div>
 
-            <button
-              onClick={onRestart}
-              className="w-full py-4 bg-white text-black hover:bg-slate-200 font-bold rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
-            >
-              <RotateCcw className="w-5 h-5" />
-              Initialize New Simulation
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button
+                onClick={onBack}
+                className="flex-1 py-4 bg-slate-800 text-white hover:bg-slate-700 font-bold rounded-xl flex items-center justify-center gap-2 transition-all duration-300 border border-white/10"
+              >
+                <ArrowRight className="w-5 h-5 rotate-180" />
+                Return to Hub
+              </button>
+
+              <button
+                onClick={onRestart}
+                className="flex-1 py-4 bg-white text-black hover:bg-slate-200 font-bold rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+              >
+                <RotateCcw className="w-5 h-5" />
+                New Simulation
+              </button>
+            </div>
           </div>
         </div>
       </motion.div>
