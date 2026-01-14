@@ -261,9 +261,10 @@ export default function GameScene({ era, character, onInteract, onPuzzleStart, o
 
         setupInteraction(npc) {
           // Interaction Marker
-          npc.interactionMarker = this.add.circle(npc.x, npc.y - 60, 10, 0xffff00, 1);
+          npc.interactionMarker = this.add.circle(npc.x, npc.y - 60, 20, 0xffff00, 0.5); // Increased hit area
           npc.interactionMarker.setStrokeStyle(2, 0x000000);
           npc.interactionMarker.setVisible(false);
+          npc.interactionMarker.setInteractive({ useHandCursor: true });
 
           // "!" Text
           const exclam = this.add.text(npc.x, npc.y - 75, '!', {
@@ -271,7 +272,17 @@ export default function GameScene({ era, character, onInteract, onPuzzleStart, o
             fontWeight: 'bold',
             color: '#000000'
           }).setOrigin(0.5).setVisible(false);
+          exclam.setInteractive({ useHandCursor: true });
           npc.exclam = exclam;
+
+          const triggerInteraction = () => {
+            if (onInteractRef.current) {
+              onInteractRef.current(npc);
+            }
+          };
+
+          npc.interactionMarker.on('pointerdown', triggerInteraction);
+          exclam.on('pointerdown', triggerInteraction);
 
           npc.showInteractionPrompt = (show) => {
             if (npc.interactionMarker) {
@@ -321,17 +332,48 @@ export default function GameScene({ era, character, onInteract, onPuzzleStart, o
           const down = keys['KeyS'] || keys['ArrowDown'];
           const space = keys['Space'];
 
-          if (left) {
-            this.player.body.setVelocityX(-speed);
-            this.player.flipX = true; // Face left
-          }
-          else if (right) {
-            this.player.body.setVelocityX(speed);
-            this.player.flipX = false; // Face right
+          let moving = false;
+
+          // Touch / Mouse Movement
+          const pointer = this.input.activePointer;
+          if (pointer.isDown) {
+            const dist = PhaserInstance.Math.Distance.Between(this.player.x, this.player.y, pointer.x, pointer.y);
+
+            if (dist > 10) { // Deadzone
+              this.physics.moveTo(this.player, pointer.x, pointer.y, speed);
+              moving = true;
+
+              // Flip based on direction
+              if (pointer.x < this.player.x) this.player.flipX = true;
+              else this.player.flipX = false;
+            }
           }
 
-          if (up) this.player.body.setVelocityY(-speed);
-          else if (down) this.player.body.setVelocityY(speed);
+          if (!moving) {
+            if (left) {
+              this.player.body.setVelocityX(-speed);
+              this.player.flipX = true; // Face left
+              moving = true;
+            }
+            else if (right) {
+              this.player.body.setVelocityX(speed);
+              this.player.flipX = false; // Face right
+              moving = true;
+            }
+
+            if (up) {
+              this.player.body.setVelocityY(-speed);
+              moving = true;
+            }
+            else if (down) {
+              this.player.body.setVelocityY(speed);
+              moving = true;
+            }
+          }
+
+          if (!moving) {
+            this.player.body.setVelocity(0);
+          }
 
           // Interaction Logic
           const interactionDistance = 150;

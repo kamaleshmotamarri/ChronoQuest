@@ -84,36 +84,36 @@ export default function InteractiveEraView({ era, character, onComplete, onRetur
       </div>
 
       {/* HUD Overlay Layer */}
-      <div className="absolute inset-0 z-10 pointer-events-none p-6 flex flex-col justify-between">
+      <div className="absolute inset-0 z-10 pointer-events-none p-2 md:p-6 flex flex-col justify-between">
 
         {/* Top Bar */}
         <header className="flex justify-between items-start pointer-events-auto">
           <div className="flex gap-4">
             <button
               onClick={onReturn}
-              className="bg-slate-900/80 backdrop-blur border border-white/10 text-slate-300 hover:text-white hover:border-white/30 p-3 rounded-lg transition-all group"
+              className="bg-slate-900/60 backdrop-blur border border-white/10 text-slate-300 hover:text-white hover:border-white/30 p-2 md:p-3 rounded-lg transition-all group"
               title="Return to Hub"
             >
               <Map className="w-5 h-5 group-hover:scale-110 transition-transform" />
             </button>
           </div>
 
-          <div className="bg-slate-900/90 backdrop-blur-md border border-purple-500/30 px-8 py-3 rounded-b-xl shadow-[0_0_20px_rgba(168,85,247,0.2)] transform -translate-y-2">
-            <h1 className="text-center font-orbitron font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 tracking-widest text-lg">
+          <div className="bg-slate-900/60 backdrop-blur-md border border-purple-500/30 px-4 md:px-8 py-2 md:py-3 rounded-b-xl shadow-[0_0_20px_rgba(168,85,247,0.2)] transform md:-translate-y-2">
+            <h1 className="text-center font-orbitron font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 tracking-widest text-xs md:text-lg">
               {era.name.toUpperCase()}
             </h1>
-            <div className="flex justify-center items-center gap-2 text-xs font-mono text-cyan-400">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <div className="flex justify-center items-center gap-2 text-[10px] md:text-xs font-mono text-cyan-400">
+              <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-cyan-400 animate-pulse" />
               YEAR: {era.year}
             </div>
           </div>
 
           <div className="flex gap-2">
-            <div className="bg-slate-900/80 backdrop-blur px-4 py-2 rounded-lg border border-white/10 flex items-center gap-3">
+            <div className="bg-slate-900/60 backdrop-blur px-2 md:px-4 py-2 rounded-lg border border-white/10 flex items-center gap-3">
               <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-md flex items-center justify-center text-lg">
                 {character.sprite}
               </div>
-              <div className="flex flex-col">
+              <div className="hidden md:flex flex-col">
                 <span className="text-xs text-slate-400 font-mono uppercase">Operative</span>
                 <span className="text-sm font-bold text-white leading-none">{character.name}</span>
               </div>
@@ -122,27 +122,46 @@ export default function InteractiveEraView({ era, character, onComplete, onRetur
         </header>
 
         {/* Bottom Bar */}
-        <footer className="flex justify-between items-end pointer-events-auto">
-          <div className="bg-slate-900/80 backdrop-blur-md rounded-lg border border-white/5 p-4 max-w-sm">
-            <div className="text-xs font-mono text-slate-500 mb-2 uppercase tracking-wide">Current Objective</div>
-            <div className="text-sm text-slate-200 leading-relaxed border-l-2 border-purple-500 pl-3">
+        <footer className="flex justify-between items-end pointer-events-auto gap-2">
+          {/* Objective Box */}
+          <div className="bg-slate-900/60 backdrop-blur-md rounded-lg border border-white/5 p-3 md:p-4 max-w-[150px] md:max-w-sm transition-all">
+            <div className="text-[10px] md:text-xs font-mono text-slate-500 mb-1 md:mb-2 uppercase tracking-wide">
+              <span className="md:hidden">Target</span>
+              <span className="hidden md:inline">Current Objective</span>
+            </div>
+
+            {/* Desktop Full Text */}
+            <div className="hidden md:block text-sm text-slate-200 leading-relaxed border-l-2 border-purple-500 pl-3">
               Locate the temporal anomaly. The provided scanner indicates strong readings from the local historical figure: <span className="text-cyan-400 font-bold">{era.historicalFigure.name}</span>.
+            </div>
+
+            {/* Mobile Compact Text */}
+            <div className="md:hidden text-xs text-slate-200 border-l-2 border-purple-500 pl-2">
+              Find <span className="text-cyan-400 font-bold block truncate">{era.historicalFigure.name}</span>
             </div>
           </div>
 
+          {/* Controls Hint */}
           <div className="flex flex-col gap-2 items-end">
-            <div className="flex items-center gap-4 bg-slate-900/80 backdrop-blur rounded-full px-5 py-2 border border-white/5 text-xs text-slate-400 font-mono">
-              <div className="flex items-center gap-1">
+            <div className="flex items-center gap-4 bg-slate-900/60 backdrop-blur rounded-full px-3 py-1.5 md:px-5 md:py-2 border border-white/5 text-[10px] md:text-xs text-slate-400 font-mono">
+              <div className="hidden md:flex items-center gap-1">
                 <span className="w-6 h-6 rounded bg-slate-700 flex items-center justify-center text-white font-sans font-bold">W</span>
                 <span className="w-6 h-6 rounded bg-slate-700 flex items-center justify-center text-white font-sans font-bold">A</span>
                 <span className="w-6 h-6 rounded bg-slate-700 flex items-center justify-center text-white font-sans font-bold">S</span>
                 <span className="w-6 h-6 rounded bg-slate-700 flex items-center justify-center text-white font-sans font-bold">D</span>
                 <span className="ml-1">MOVE</span>
               </div>
-              <div className="w-px h-4 bg-slate-700" />
-              <div className="flex items-center gap-1">
+              <div className="md:hidden flex items-center gap-1">
+                <span className="text-white font-bold animate-pulse">TAP / DRAG</span>
+              </div>
+              <div className="w-px h-4 bg-slate-700 mx-2 hidden md:block" />
+              <div className="hidden md:flex items-center gap-1">
                 <span className="px-2 h-6 rounded bg-slate-700 flex items-center justify-center text-white font-sans font-bold min-w-[3rem]">SPACE</span>
                 <span>INTERACT</span>
+              </div>
+              <div className="md:hidden flex items-center gap-1 border-l border-slate-700 pl-2 ml-2">
+                <span className="w-4 h-4 rounded-full bg-yellow-500/20 text-yellow-300 flex items-center justify-center font-bold border border-yellow-500/50 text-[10px]">!</span>
+                <span className="ml-1">Interact</span>
               </div>
             </div>
           </div>
