@@ -34,15 +34,15 @@ export default function InteractiveEraView({ era, character, onComplete, onRetur
   // Puzzle View with premium UI overlay
   if (showPuzzle) {
     return (
-      <div className="relative min-h-screen bg-black overflow-hidden font-sans">
+      <div className="relative min-h-screen bg-black font-sans flex flex-col overflow-y-auto">
         {/* Background Overlay */}
-        <div className="absolute inset-0 bg-slate-900/90 z-0">
+        <div className="absolute inset-0 bg-slate-900/90 z-0 fixed">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-slate-900/50 to-black" />
         </div>
 
-        <div className="relative z-10 container mx-auto px-4 py-8 h-screen flex flex-col">
+        <div className="relative z-10 container mx-auto px-4 py-8 flex-1 flex flex-col min-h-[100dvh]">
           {/* Header */}
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex justify-between items-center mb-8 shrink-0">
             <button
               onClick={() => setShowPuzzle(false)}
               className="group flex items-center gap-2 px-4 py-2 bg-slate-800/50 border border-slate-700 hover:border-cyan-500/50 rounded-lg text-slate-300 hover:text-cyan-400 transition-all font-mono text-sm uppercase tracking-wider"
@@ -53,13 +53,13 @@ export default function InteractiveEraView({ era, character, onComplete, onRetur
 
             <div className="text-right">
               <div className="text-xs font-mono text-slate-500 uppercase tracking-widest">Puzzle Protocol</div>
-              <div className="text-cyan-400 font-bold font-orbitron">{era.name} // SEQUENCE_01</div>
+              <div className="text-cyan-400 font-bold font-orbitron text-xs md:text-base">{era.name} // SEQUENCE_01</div>
             </div>
           </div>
 
           {/* Puzzle Container */}
-          <div className="flex-1 flex items-center justify-center p-4">
-            <div className="w-full max-w-5xl bg-slate-900/50 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-1 relative overflow-hidden">
+          <div className="flex-1 flex items-center justify-center p-1 md:p-4 mb-8">
+            <div className="w-full max-w-5xl bg-slate-900/50 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-1 relative">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-purple-500 to-cyan-500 opacity-50" />
               <PuzzleComponent puzzle={era.puzzle} onSolve={handlePuzzleSolve} />
             </div>

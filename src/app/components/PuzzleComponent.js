@@ -78,23 +78,23 @@ export default function PuzzleComponent({ puzzle, onSolve }) {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center justify-center p-8 bg-slate-900/40 backdrop-blur-xl rounded-2xl border border-purple-500/50 shadow-2xl max-w-2xl mx-auto text-center"
+        className="flex flex-col items-center justify-center p-6 md:p-8 bg-slate-900/40 backdrop-blur-xl rounded-2xl border border-purple-500/50 shadow-2xl max-w-2xl mx-auto text-center w-full"
       >
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 200, damping: 10 }}
-          className="w-24 h-24 mb-6 rounded-full bg-green-500/20 flex items-center justify-center border-4 border-green-500 shadow-[0_0_50px_rgba(34,197,94,0.5)]"
+          className="w-20 h-20 md:w-24 md:h-24 mb-6 rounded-full bg-green-500/20 flex items-center justify-center border-4 border-green-500 shadow-[0_0_50px_rgba(34,197,94,0.5)]"
         >
-          <CheckCircle className="w-12 h-12 text-green-400" />
+          <CheckCircle className="w-10 h-10 md:w-12 md:h-12 text-green-400" />
         </motion.div>
 
-        <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-300 via-emerald-400 to-teal-400 bg-clip-text text-transparent mb-4 font-orbitron">
+        <h2 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-green-300 via-emerald-400 to-teal-400 bg-clip-text text-transparent mb-4 font-orbitron">
           TIMELINE RESTORED!
         </h2>
 
         <div className="space-y-4 mb-8">
-          <p className="text-xl text-slate-300">
+          <p className="text-lg md:text-xl text-slate-300">
             Temporal anomalies have been stabilized.
           </p>
           <div className="flex items-center justify-center gap-2 text-green-400/80 font-mono text-sm">
@@ -105,12 +105,12 @@ export default function PuzzleComponent({ puzzle, onSolve }) {
 
         <button
           onClick={onSolve}
-          className="group relative px-8 py-4 bg-transparent overflow-hidden rounded-xl border border-green-500/50 hover:border-green-400 transition-all duration-300"
+          className="group relative px-8 py-4 bg-transparent overflow-hidden rounded-xl border border-green-500/50 hover:border-green-400 transition-all duration-300 w-full md:w-auto"
         >
           <div className="absolute inset-0 w-full h-full bg-green-500/10 group-hover:bg-green-500/20 transition-all duration-300" />
           <div className="absolute inset-0 w-0 bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:w-[200%] transition-all duration-700 ease-in-out transform -skew-x-12 -translate-x-full group-hover:translate-x-full" />
 
-          <span className="relative flex items-center gap-3 text-green-300 font-bold tracking-widest uppercase">
+          <span className="relative flex items-center justify-center gap-3 text-green-300 font-bold tracking-widest uppercase">
             <Zap className="w-5 h-5" />
             Return to Hub
           </span>
@@ -120,18 +120,18 @@ export default function PuzzleComponent({ puzzle, onSolve }) {
   }
 
   return (
-    <div className="bg-slate-900/80 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/10 shadow-xl relative overflow-hidden min-h-[500px] flex flex-col">
+    <div className="bg-slate-900/80 backdrop-blur-md rounded-2xl p-4 md:p-8 border border-white/10 shadow-xl relative overflow-hidden flex flex-col w-full max-h-[80vh] md:max-h-none h-full">
       {/* Background Decorative Elements */}
-      <div className="absolute -top-20 -right-20 w-64 h-64 bg-purple-600/20 rounded-full blur-[80px]" />
-      <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-cyan-600/20 rounded-full blur-[80px]" />
+      <div className="absolute -top-20 -right-20 w-64 h-64 bg-purple-600/20 rounded-full blur-[80px] pointer-events-none" />
+      <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-cyan-600/20 rounded-full blur-[80px] pointer-events-none" />
 
       {/* Progress Header */}
-      <div className="relative z-10 flex justify-between items-center mb-8">
+      <div className="relative z-10 flex justify-between items-center mb-6 md:mb-8 shrink-0">
         <div>
-          <h3 className="text-2xl font-bold text-white font-orbitron tracking-wide">
+          <h3 className="text-xl md:text-2xl font-bold text-white font-orbitron tracking-wide">
             Temporal Challenge
           </h3>
-          <p className="text-slate-400 text-sm font-mono mt-1">
+          <p className="text-slate-400 text-xs md:text-sm font-mono mt-1">
             Sequence {currentQuestionIndex + 1} of {questions.length}
           </p>
         </div>
@@ -141,7 +141,7 @@ export default function PuzzleComponent({ puzzle, onSolve }) {
           {questions.map((_, idx) => (
             <div
               key={idx}
-              className={`h-2 w-8 rounded-full transition-all duration-300 ${idx <= currentQuestionIndex
+              className={`h-1.5 md:h-2 w-6 md:w-8 rounded-full transition-all duration-300 ${idx <= currentQuestionIndex
                 ? idx === currentQuestionIndex
                   ? 'bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]'
                   : 'bg-green-500'
@@ -153,7 +153,7 @@ export default function PuzzleComponent({ puzzle, onSolve }) {
       </div>
 
       {/* Question Container */}
-      <div className="relative z-10 flex-1 flex flex-col">
+      <div className="relative z-10 flex-1 flex flex-col overflow-y-auto pr-2 custom-scrollbar">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentQuestionIndex}
@@ -161,9 +161,9 @@ export default function PuzzleComponent({ puzzle, onSolve }) {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
-            className="flex-1"
+            className="flex-1 pb-4"
           >
-            <p className="text-white text-xl md:text-2xl font-light leading-relaxed mb-8">
+            <p className="text-white text-lg md:text-2xl font-light leading-relaxed mb-6 md:mb-8">
               {currentQuestion.question}
             </p>
 
@@ -218,7 +218,7 @@ export default function PuzzleComponent({ puzzle, onSolve }) {
           )}
         </AnimatePresence>
 
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <button
             onClick={handleSubmit}
             disabled={!selectedAnswer}
@@ -232,7 +232,7 @@ export default function PuzzleComponent({ puzzle, onSolve }) {
 
           <button
             onClick={() => setShowHint(!showHint)}
-            className="px-6 py-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl border border-slate-700 transition-all duration-300"
+            className="px-6 py-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl border border-slate-700 transition-all duration-300 text-center"
           >
             {showHint ? 'HIDE INTEL' : 'REQ INTEL'}
           </button>
